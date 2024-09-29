@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+  <script  type="module" src="stock-details.js" defer></script>
+  <link rel="stylesheet" href="stocks.css">
+  <link rel="icon" href="https://media.istockphoto.com/id/961649530/vector/finance-graphic-bars-up-rising-arrow-vector-illustration-design.jpg?s=612x612&w=0&k=20&c=sXxosOL8SggL-XNdrm3QP05YFcmTlerS9wqkmB6O-TM=" type="image/x-icon">
+</head>
+<body>
+    <nav class="navbar nav-bar-companiesmarketcap navbar-expand-lg d-flex" data-bs-theme="dark">
+      <div class="navbar-collapse-container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="d-flex form-inline" role="search">
+          <div class="search-input">
+            <input id="autocomplete-input" class="form-control me-2" type="search" placeholder="Company name,ticker..." aria-label="Search" autocomplete="off">
+            <div id="autocomplete-results" class="list-group"></div>
+          </div>
+          <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="rgb(156, 153, 153)" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              </svg>
+          </span>
+        </form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <a class="navbar-brand" href="stocks.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" fill="white" class="bi bi-bar-chart-line-fill" viewBox="2 2 16 16">
+                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
+              </svg>Global Ranking
+            </a>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Ranking by Category
+              </a>
+              <ul class="dropdown-menu" id="sector-dropdown">
+                <li><a class="dropdown-item" href="#" data-sector="Technology">💻Technology</a></li>
+                <li><a class="dropdown-item" href="#" data-sector="Communication Services">📞Communication Services</a></li>
+                <li><a class="dropdown-item" href="#" data-sector="Consumer Cyclical">🛍️Consumer Cyclical</a></li>
+                <li><a class="dropdown-item" href="#" data-sector="Financial Services">💰Financial Services</a></li>
+                <li><a class="dropdown-item" href="#" data-sector="Healthcare">🏥Healthcare</a></li>
+                <li><a class="dropdown-item" href="#" data-sector="Consumer Defensive">🛒Consumer Defensive</a></li>
+              </ul>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="main-body">
+      <div class="container-details"  id="main">
+          <!-- Company Overview  -->
+      </div>
+      <div class="container-details" id="chart">
+        <div id="loading" class="loading-indicator">
+          <div class="spinner"></div>
+        </div>
+        <div class="btnGroup"  aria-label="Historical data based on economic indexes">
+            <span>Change chart based on:</span>
+            <button type="button" class="btn text-light" data-rank= "Revenue">Revenue</button>
+            <button type="button" class="btn text-light" data-rank= "Net-income">Net Income</button>
+            <button type="button" class="btn text-light" data-rank= "Ebitda">EBITDA</button>
+            <button type="button" class="btn text-light" data-rank= "Gross-profit">Gross Profit</button>
+            <button type="button" class="btn text-light" data-rank= "Profit-margin">Profit Margin</button>
+        </div>
+        <canvas id="lineChart">
+            <!-- Linechart -->
+        </canvas>
+        <div id="quotes">
+            <!-- Quotes -->
+        </div>
+        
+      </div>
+      <div class="container-details" id="news">
+        <!-- NEWS -->
+      </div>
+      <div id="esgChart" class="container-details" >
+        <!-- SCORES -->
+      </div>
+    </section>
+
+    <section id="footer">
+        <div class="container-md">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>What Is Market Capitalization?</h1>
+                    <p>Market capitalization, or "market cap," represents the total dollar market value of a company's outstanding shares of stock. Investors use this figure to determine a company's size instead of sales or total asset value. In an acquisition, the market cap helps determine whether a takeover candidate represents a good value for the acquirer.</p>
+                    <h1>Disclaimer</h1>
+                    <p>The data presented on this site is sourced from external providers and may not reflect real-time updates. While we strive for accuracy, there may be delays in data refresh and updates. Please verify critical information with official sources before making decisions based on this data.</p>
+                </div>
+                <div class="col-md-6">
+                    <h1>Contact</h1>
+                    <p>For inquiries or if you want to report a problem write to example@.com</p>
+                    <p>© StocksMarket</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
